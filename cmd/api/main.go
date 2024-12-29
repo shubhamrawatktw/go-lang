@@ -1,8 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"go-license/internal/config"
 	"go-license/internal/http/handlers/student"
+	"go-license/internal/storage/sqllite"
+	"log"
+	"log/slog"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -32,22 +36,30 @@ import (
 // 	return r
 // }
 
-
 func main() {
 
 	// load config
-	cfg :=config.MustLoad()
-	
+	cfg := config.MustLoad()
+
+	fmt.Println(cfg)
+
+	// database setup
+
+	_,err :=sqllite.New(cfg)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+
+	slog.Info("storage initialised")
 
 	// setup router
 
 	r := fiber.New()
 
-	r.Post("/api/students",student.New)
+	r.Post("/api/students", student.New)
 
-	
 	r.Listen(cfg.Port)
-
-
 
 }

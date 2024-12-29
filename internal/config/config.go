@@ -8,32 +8,30 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type Config struct{
-	Env string
+type Config struct {
+	Env         string
 	StoragePath string
-	Port string
+	Port        string
 }
 
+func MustLoad() *Config {
 
-func MustLoad() *Config{
+	err := godotenv.Load()
 
-	 err:= godotenv.Load()
-
-	 if err != nil {
-		log.Fatalf("Error loading env file : %v",err)
-	 }
-	port:=os.Getenv("PORT")
-	storagePath:=os.Getenv("STORAGE_PATH")
-	env:=os.Getenv("ENV")
-
+	if err != nil {
+		log.Fatalf("Error loading env file : %v", err)
+	}
+	port := os.Getenv("PORT")
+	storagePath := os.Getenv("STORAGE_PATH")
+	env := os.Getenv("ENV")
 
 	cfg := Config{
-		Env: env,
+		Env:         env,
 		StoragePath: storagePath,
-		Port: port,
+		Port:        port,
 	}
 
-	fmt.Println(port,storagePath,env)
+	fmt.Println(port, storagePath, env)
 
 	return &cfg
 }
