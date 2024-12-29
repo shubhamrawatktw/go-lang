@@ -45,7 +45,7 @@ func main() {
 
 	// database setup
 
-	_,err :=sqllite.New(cfg)
+	storage,err :=sqllite.New(cfg)
 
 	if err != nil {
 		log.Fatal(err)
@@ -58,7 +58,7 @@ func main() {
 
 	r := fiber.New()
 
-	r.Post("/api/students", student.New)
+	r.Post("/api/students", student.New(storage))
 
 	r.Listen(cfg.Port)
 
