@@ -2,6 +2,7 @@ package main
 
 import (
 	"go-license/internal/config"
+	"go-license/internal/http/handlers/student"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -12,13 +13,6 @@ import (
 
 // type config struct {
 // 	addr string
-// }
-
-// func (app *application) healthCheckHandler(c *fiber.Ctx) error {
-// 	return c.JSON(fiber.Map{
-// 		"status":  "success",
-// 		"message": "Health check passed",
-// 	})
 // }
 
 // func (app *application) mount() *fiber.App {
@@ -49,6 +43,7 @@ func main() {
 
 	r := fiber.New()
 
+	r.Post("/api/students",student.New)
 
 	
 	r.Listen(cfg.Port)
